@@ -1,5 +1,6 @@
 package com.example.localloop
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.*
@@ -29,7 +30,6 @@ class CategoryListActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 categories.clear()
                 adapter.clear()
-
                 for (catSnap in snapshot.children) {
                     val cat = catSnap.getValue(Category::class.java)
                     if (cat != null) {
@@ -39,7 +39,6 @@ class CategoryListActivity : AppCompatActivity() {
                 }
                 adapter.notifyDataSetChanged()
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(this@CategoryListActivity, "Error loading", Toast.LENGTH_SHORT).show()
             }
@@ -57,8 +56,38 @@ class CategoryListActivity : AppCompatActivity() {
 
         listView.setOnItemLongClickListener { _, _, position, _ ->
             val selected = categories[position]
-            dbRef.child(selected.id!!).removeValue()
+            onDeleteCategoryClicked(selected.id!!)
             true
         }
+    }
+
+    // -- Refined Deletion Handling --
+    private fun onDeleteCategoryClicked(categoryId: String) {
+        canDeleteCategory(categoryId) { canDelete ->
+            if (canDelete) {
+                AlertDialog.Builder(this)
+                    .setTitle("Delete Category?")
+                    .setMessage("Are you sure you want to delete this category?")
+                    .setPositiveButton("Delete") { _, _ ->
+                        dbRef.child(categoryId).removeValue()
+                    }
+                    .setNegativeButton("Cancel", null)
+                    .show()
+            } else {
+                Toast.makeText(this, "Cannot delete: Category is in use.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    // Checks if any event uses the category
+    private fun canDeleteCategory(categoryId: String, callback: (Boolean) -> Unit) {
+        val eventsRef = FirebaseDatabase.getInstance().getReference("events")
+        eventsRef.orderByChild("categoryId").equalTo(categoryId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    callback(!snapshot.exists())
+                }
+                override fun onCancelled(error: DatabaseError) { callback(false) }
+            })
     }
 }
