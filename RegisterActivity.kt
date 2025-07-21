@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.localloop.model.User
 import com.google.firebase.database.FirebaseDatabase
 import java.util.*
+import androidx.appcompat.widget.Toolbar
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -15,7 +16,11 @@ class RegisterActivity : AppCompatActivity() {
 
         // This line is needed for XML layout to work
         setContentView(R.layout.activity_register)
-
+        // Standard Toolbar setup for all Activities
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) // Show the back arrow
+        supportActionBar?.title = "Screen Title" // Set dynamically if needed
         // Access views defined in XML
         val usernameInput = findViewById<EditText>(R.id.usernameInput)
         val emailInput = findViewById<EditText>(R.id.emailInput)
@@ -45,7 +50,7 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             val uid = UUID.randomUUID().toString()
-            val user = User(uid, username, email, role, true)
+            val user = User(uid, username, email, password, role, true)
 
             val ref = FirebaseDatabase.getInstance().getReference("users")
             ref.child(uid).setValue(user)

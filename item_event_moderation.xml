@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="8dp"
+    card_view:cardElevation="2dp"
+    android:layout_margin="8dp"
+    tools:ignore="MissingClass">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:titleTextColor="@android:color/white"
+            android:elevation="4dp"
+            />
+        <TextView
+            android:id="@+id/eventName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/event_name_"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#222222"
+            android:layout_marginBottom="10dp"/>
+
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/btnApprove"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="@string/approve"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#388E3C"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/btnReject"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="@string/reject_"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#FBC02D"
+                android:layout_marginEnd="8dp" />
+
+            <Button
+                android:id="@+id/btnDelete"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:text="@string/delete__"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#D32F2F"/>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

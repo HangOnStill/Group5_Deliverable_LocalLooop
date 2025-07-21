@@ -1,4 +1,3 @@
-// EventAdapter.kt
 package com.example.localloop
 
 import android.view.LayoutInflater
@@ -7,19 +6,21 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.localloop.model.Event
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.recyclerview.widget.DiffUtil
 
 
 class EventAdapter(
-    private val events: List<Event>,
-    private val onEdit: (Event) -> Unit,
     private val onDelete: (Event) -> Unit,
-    private val onDetail: (Event) -> Unit
-) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
+    private val onDetail: (Event) -> Unit,
+    private val onJoinRequest: (Event) -> Unit,
+    private val userRole: String
+) : ListAdapter<Event, EventAdapter.EventViewHolder>(EventDiffCallback()) {
 
     class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nameText: TextView = view.findViewById(R.id.eventNameText)
@@ -30,6 +31,7 @@ class EventAdapter(
         val deleteBtn: Button = view.findViewById(R.id.deleteEventBtn)
         val detailsBtn: Button = view.findViewById(R.id.detailsEventBtn)
         val imageView: ImageView = view.findViewById(R.id.eventImageView)
+        val joinRequestBtn: Button = view.findViewById(R.id.joinRequestBtn)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
@@ -38,26 +40,54 @@ class EventAdapter(
         return EventViewHolder(view)
     }
 
-    override fun getItemCount(): Int = events.size
-
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        val event = events[position]
+        val event = getItem(position)
         holder.nameText.text = event.name
         holder.descText.text = event.description
+        // If dateTime is Long, convert it to readable date string
+        holder.dateText.text = try {
+            val date = Date(event.dateTime)
+            SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(date)
+        } catch (e: Exception) {
+            event.dateTime.toString()
+        }
+        "Fee: ${event.fee}".also { holder.feeText.text = it }
 
-        // Format date
-        val date = Date(event.dateTime)
-        val formatted = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(date)
-        holder.dateText.text = formatted
-        holder.feeText.text = "Fee: $${event.fee ?: 0.0}"
-
-        // Load image if available
         if (!event.imageUrl.isNullOrEmpty()) {
             Picasso.get().load(event.imageUrl).into(holder.imageView)
+        } else {
+            holder.imageView.setImageResource(android.R.color.darker_gray) // fallback
         }
 
-        holder.editBtn.setOnClickListener { onEdit(event) }
+        // Button visibility by role
+        when (userRole) {
+            "Participant" -> {
+                holder.editBtn.visibility = View.GONE
+                holder.deleteBtn.visibility = View.GONE
+                holder.joinRequestBtn.visibility = View.VISIBLE
+            }
+            "Organizer" -> {
+                holder.editBtn.visibility = View.VISIBLE
+                holder.deleteBtn.visibility = View.VISIBLE
+                holder.joinRequestBtn.visibility = View.GONE
+            }
+            else -> {
+                holder.editBtn.visibility = View.VISIBLE
+                holder.deleteBtn.visibility = View.VISIBLE
+                holder.joinRequestBtn.visibility = View.VISIBLE
+            }
+        }
+
         holder.deleteBtn.setOnClickListener { onDelete(event) }
         holder.detailsBtn.setOnClickListener { onDetail(event) }
+        holder.joinRequestBtn.setOnClickListener { onJoinRequest(event) }
+        holder.editBtn.setOnClickListener { onDetail(event) } // You may want separate logic for editing
     }
+}
+
+// Add this to the same file or a separate file
+
+class EventDiffCallback : DiffUtil.ItemCallback<Event>() {
+    override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean = oldItem.id == newItem.id
+    override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean = oldItem == newItem
 }

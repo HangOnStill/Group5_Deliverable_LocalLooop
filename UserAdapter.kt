@@ -21,7 +21,7 @@ class UserAdapter(
 
         fun bind(user: User) {
             //  Use string resource with placeholders
-            nameEmailText.text = itemView.context.getString(R.string.user_info, user.name, user.email)
+            nameEmailText.text = itemView.context.getString(R.string.user_info, user.username, user.email)
             roleText.text = itemView.context.getString(R.string.role_info, user.role)
             statusToggleBtn.text = if (user.active) itemView.context.getString(R.string.disable)
             else itemView.context.getString(R.string.enable)

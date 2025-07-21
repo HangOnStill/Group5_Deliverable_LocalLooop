@@ -8,13 +8,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".EditCategoryActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:titleTextColor="@android:color/white"
+        android:elevation="4dp"
+        />
+
     <EditText
         android:id="@+id/editCategoryName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
         android:autofillHints=""
         android:hint="@string/edit_category_name"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:layout_marginTop="126dp"
+        android:layout_marginStart="26dp"/>
 
     <EditText
         android:id="@+id/editCategoryDesc"
@@ -25,13 +36,15 @@
         android:inputType="textMultiLine"
         android:minLines="3"
         android:gravity="top"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="46dp"
+        android:layout_marginStart="26dp"/>
 
     <Button
         android:id="@+id/updateCategoryBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/update_category"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="44dp"
+        android:layout_marginStart="26dp"/>
 
 </LinearLayout>

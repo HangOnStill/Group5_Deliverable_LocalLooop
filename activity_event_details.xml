@@ -10,27 +10,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:titleTextColor="@android:color/white"
+            android:elevation="4dp"
+            />
         <EditText
             android:id="@+id/eventNameInput"
             android:autofillHints=""
             android:hint="@string/event_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapSentences" />
+            android:layout_width="480dp"
+            android:layout_height="100dp"
+            android:inputType="textCapSentences"
+            android:layout_marginStart="8dp"/>
 
         <EditText
             android:id="@+id/eventDescInput"
             android:autofillHints=""
             android:hint="@string/event_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="480dp"
+            android:layout_height="100dp"
             android:layout_marginTop="8dp"
-            android:inputType="textMultiLine" />
+            android:inputType="textMultiLine"
+            android:layout_marginStart="8dp"/>
 
         <Spinner
             android:id="@+id/categorySpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="480dp"
+            android:layout_height="100dp"
             android:layout_marginTop="8dp"/>
 
         <EditText
@@ -38,14 +48,16 @@
             android:autofillHints=""
             android:hint="@string/participation_fee"
             android:inputType="numberDecimal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"/>
+            android:layout_width="480dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="15dp"
+            />
 
         <Button
             android:id="@+id/dateTimeBtn"
             android:text="@string/pick_date_time"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"/>
 
@@ -58,7 +70,7 @@
         <Button
             android:id="@+id/selectImageBtn"
             android:text="@string/select_image"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"/>
 
@@ -74,8 +86,20 @@
         <Button
             android:id="@+id/saveEventBtn"
             android:text="@string/save_event"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"/>
+
+        <Button
+            android:id="@+id/joinEventBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/request_to_join"/>
+        <TextView
+            android:id="@+id/joinStatusText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
     </LinearLayout>
 </ScrollView>

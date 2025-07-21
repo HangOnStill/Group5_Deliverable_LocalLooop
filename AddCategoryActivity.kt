@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.localloop.model.Category
 import com.google.firebase.database.*
+import androidx.appcompat.widget.Toolbar
 
 class AddCategoryActivity : AppCompatActivity() {
 
@@ -23,6 +24,12 @@ class AddCategoryActivity : AppCompatActivity() {
         descInput = findViewById(R.id.categoryDescInput)
         addBtn = findViewById(R.id.addCategoryBtn)
         databaseRef = FirebaseDatabase.getInstance().getReference("categories")
+
+        // Standard Toolbar setup for all Activities
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) // Show the back arrow
+        supportActionBar?.title = "Screen Title" // Set dynamically if needed
 
         addBtn.setOnClickListener {
             val name = nameInput.text.toString().trim()

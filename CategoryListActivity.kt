@@ -7,6 +7,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.localloop.model.Category
 import com.google.firebase.database.*
+import androidx.appcompat.widget.Toolbar
 
 class CategoryListActivity : AppCompatActivity() {
 
@@ -18,6 +19,16 @@ class CategoryListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category_list)
+        val addCategoryBtn = findViewById<Button>(R.id.buttonAddCategory)
+        addCategoryBtn.setOnClickListener {
+            startActivity(Intent(this, AddCategoryActivity::class.java))
+        }
+
+        // Standard Toolbar setup for all Activities
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) // Show the back arrow
+        supportActionBar?.title = "Screen Title" // Set dynamically if needed
 
         listView = findViewById(R.id.categoryListView)
         categories = ArrayList()
@@ -56,9 +67,25 @@ class CategoryListActivity : AppCompatActivity() {
 
         listView.setOnItemLongClickListener { _, _, position, _ ->
             val selected = categories[position]
-            onDeleteCategoryClicked(selected.id!!)
+            val options = arrayOf("Edit", "Delete")
+            AlertDialog.Builder(this)
+                .setItems(options) { _, which ->
+                    when (which) {
+                        0 -> { // Edit
+                            val intent = Intent(this, EditCategoryActivity::class.java)
+                            intent.putExtra("categoryId", selected.id)
+                            intent.putExtra("categoryName", selected.name)
+                            intent.putExtra("categoryDesc", selected.description)
+                            startActivity(intent)
+                        }
+                        1 -> { // Delete
+                            onDeleteCategoryClicked(selected.id!!)
+                        }
+                    }
+                }.show()
             true
         }
+
     }
 
     // -- Refined Deletion Handling --

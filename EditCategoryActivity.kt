@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.localloop.model.Category
 import com.google.firebase.database.FirebaseDatabase
+import androidx.appcompat.widget.Toolbar
 
 class EditCategoryActivity : AppCompatActivity() {
 
@@ -15,6 +16,12 @@ class EditCategoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_category)
+
+        // Standard Toolbar setup for all Activities
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) // Show the back arrow
+        supportActionBar?.title = "Screen Title" // Set dynamically if needed
 
         val nameInput = findViewById<EditText>(R.id.editCategoryName)
         val descInput = findViewById<EditText>(R.id.editCategoryDesc)

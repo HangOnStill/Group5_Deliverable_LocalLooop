@@ -1,64 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="12dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white">
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:titleTextColor="@android:color/white"
+        android:elevation="4dp"
+        />
 
     <TextView
         android:id="@+id/eventNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/event_name___"
         android:textStyle="bold"
-        android:textSize="18sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:textSize="18sp" />
+
     <TextView
         android:id="@+id/eventDescText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/description_" />
+
     <TextView
         android:id="@+id/eventDateText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/date____" />
+
     <TextView
         android:id="@+id/eventFeeText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fee_" />
+
     <ImageView
         android:id="@+id/eventImageView"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="120dp"
         android:scaleType="centerCrop"
-        android:contentDescription="@string/event_image"
-        android:src="@drawable/ic_launcher_background"/>
+        android:contentDescription="@string/event_image__" />
 
     <LinearLayout
-        style="?android:attr/buttonBarStyle"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:gravity="end">
 
         <Button
             android:id="@+id/editEventBtn"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/edit"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/edit__" />
 
         <Button
             android:id="@+id/deleteEventBtn"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/delete_"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/delete____" />
 
         <Button
             android:id="@+id/detailsEventBtn"
-            style="?android:attr/buttonBarButtonStyle"
-            android:text="@string/details"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/details__" />
+
+        <Button
+            android:id="@+id/joinRequestBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/join_" />
     </LinearLayout>
 </LinearLayout>

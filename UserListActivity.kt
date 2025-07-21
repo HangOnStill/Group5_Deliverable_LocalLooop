@@ -2,27 +2,39 @@ package com.example.localloop
 
 import android.os.Bundle
 import android.widget.Toast
-import android.util.Patterns
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.localloop.model.User
 import com.google.firebase.database.*
+import androidx.appcompat.widget.Toolbar
 
 class UserListActivity : AppCompatActivity() {
 
     private lateinit var dbRef: DatabaseReference
     private lateinit var recyclerView: RecyclerView
-    private lateinit var userList: ArrayList<User>
     private lateinit var adapter: UserAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_list)
+        // Standard Toolbar setup for all Activities
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) // Show the back arrow
+        supportActionBar?.title = "Screen Title" // Set dynamically if needed
+        // Set up Toolbar (make sure you have one in your XML)
+        setSupportActionBar(findViewById(R.id.toolbar))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "All Users"
+
+        // Toolbar back button
+        // (works if you call setSupportActionBar above)
+        // Handles back navigation
+        overridePendingTransition(0, 0)
 
         recyclerView = findViewById(R.id.userRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        userList = ArrayList()
         adapter = UserAdapter { user, action ->
             if (action == "delete") {
                 dbRef.child(user.uid).removeValue()
@@ -32,32 +44,29 @@ class UserListActivity : AppCompatActivity() {
         }
         recyclerView.adapter = adapter
 
-
         dbRef = FirebaseDatabase.getInstance().getReference("users")
         dbRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                userList.clear()
+                val userList = ArrayList<User>()
                 for (userSnap in snapshot.children) {
                     val user = userSnap.getValue(User::class.java)
                     if (user != null) {
-                        if (Patterns.EMAIL_ADDRESS.matcher(user.email).matches()) {
-                            userList.add(user)
-                        } else {
-                            Toast.makeText(
-                                this@UserListActivity,
-                                "Invalid email found for user: ${user.name}",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                        userList.add(user)
                     }
                 }
-                adapter.submitList(userList.toList())
+                adapter.submitList(userList)
             }
-
-
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(this@UserListActivity, "Failed to load users", Toast.LENGTH_SHORT).show()
             }
         })
+
+        // If you want a physical back button:
+        findViewById<android.widget.Button>(R.id.backButton)?.setOnClickListener { finish() }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 }

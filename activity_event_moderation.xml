@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
@@ -14,23 +15,21 @@
         android:elevation="4dp"
         />
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/eventSearchView"
+
+    <TextView
+        android:id="@+id/moderationHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="Search events..." />
+        android:text="@string/pending_event_moderation"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="12dp"
+        android:textColor="#222222"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/eventRecyclerView"
+        android:id="@+id/eventsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-
-    <Button
-        android:id="@+id/addEventBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_event"
-        android:visibility="gone" />
-
 </LinearLayout>

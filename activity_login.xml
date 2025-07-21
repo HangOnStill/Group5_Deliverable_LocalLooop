@@ -6,26 +6,37 @@
     android:padding="24dp"
     android:gravity="center">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:titleTextColor="@android:color/white"
+        android:elevation="4dp"
+        />
+
     <EditText
         android:id="@+id/usernameInput"
-        android:autofillHints=""
+        android:autofillHints="username"
         android:hint="@string/username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:inputType="textPersonName" />
+
 
     <EditText
         android:id="@+id/passwordInput"
         android:autofillHints=""
         android:hint="@string/password"
         android:inputType="textPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
         android:layout_marginTop="12dp" />
 
     <Button
         android:id="@+id/loginBtn"
         android:text="@string/login"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp" />
 </LinearLayout>
